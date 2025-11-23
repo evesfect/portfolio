@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ege Y | Technical Art</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- GLOBAL RESET --- */
+        :root {
+            --font-main: 'Space Mono', monospace;
+            --bg-color: #ffffff;
+            --text-color: #111111d7;
+            --dim-color: #00000041;
+            --link-color: #163280;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            line-height: 1.4;
+        }
+
+        /* --- LINKS: BLUE & UNDERLINED --- */
+        a { 
+            text-decoration: underline; 
+            color: var(--link-color); 
+            transition: opacity 0.2s; 
+            cursor: pointer; 
+        }
+        a:hover { 
+            opacity: 0.6; 
+        }
+
+        /* --- LAYOUT GRID --- */
+        .page-layout {
+            display: flex;
+            flex-direction: row;
+            width: 96%;
+            max-width: 2000px; 
+            margin: 0 auto;
+            padding: 20px 0; 
+            gap: 50px;
+            min-height: 100vh;
+        }
+
+        /* --- LEFT COLUMN (PROJECTS) --- */
+        .content-column {
+            flex: 3.5; 
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1.5px solid var(--text-color);
+            padding-bottom: 8px;
+            margin-bottom: 25px; 
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85rem;
+        }
+
+        .project-item {
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee; 
+        }
+        .project-item:last-child { border-bottom: none; }
+
+        .project-card {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start; 
+        }
+
+        /* MEDIA AREA */
+        .media-container {
+            flex: 0.6; 
+            background: #f0f0f0;
+            position: relative;
+        }
+
+        .media-container video, 
+        .media-container img {
+            width: 100%;
+            height: auto; 
+            display: block;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* TEXT AREA */
+        .text-container {
+            flex: 0.8; 
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .project-headline {
+            font-size: 2rem; 
+            line-height: 1;
+            font-weight: 700;
+            color: #d4d4d4; 
+            text-align: right;
+            margin-bottom: 10px; 
+            width: 100%; 
+            user-select: none;
+            mix-blend-mode: multiply;
+        }
+
+        .project-title {
+            font-size: 1.1rem; 
+            font-weight: 700;
+            margin-bottom: 2px;
+            color: #000;
+        }
+
+        .project-tags {
+            font-size: 0.75rem;
+            color: #555;
+            margin-bottom: 10px; 
+            display: block;
+        }
+
+        /* --- GRAY DESCRIPTION TEXT --- */
+        .project-description {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #666666; /* Gray text */
+            margin-bottom: 15px; 
+            max-width: 100%;
+        }
+
+        .read-more {
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-block;
+            /* Inherits blue and underline from global 'a' tag */
+        }
+
+        /* --- RIGHT COLUMN (SIDEBAR) --- */
+        .sidebar-column {
+            flex: 1;
+            position: sticky;
+            top: 20px; 
+            height: fit-content;
+            min-width: 250px;
+        }
+
+        .clock-display { font-variant-numeric: tabular-nums; }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 0.85rem;
+        }
+
+        .profile-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 2px; display: block;}
+        
+        .role-text {
+            font-weight: 700;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .bio-text {
+            color: #444;
+            line-height: 1.5;
+        }
+
+        .sidebar-links {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .sidebar-footer {
+            margin-top: 20px;
+            color: #999;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 900px) {
+            .page-layout {
+                flex-direction: column;
+                padding: 15px;
+                gap: 30px;
+                width: 100%;
+            }
+            .sidebar-column {
+                position: relative;
+                top: 0;
+                width: 100%;
+                border-top: 1px solid #000;
+                padding-top: 20px;
+            }
+            .project-card {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .project-headline {
+                text-align: left;
+                font-size: 2.2rem;
+                margin-bottom: 10px;
+            }
+            .media-container { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-layout">
+        
+        <!-- LEFT: WORK CONTENT -->
+        <main class="content-column">
+            <div class="section-header">
+                <span>Example Work</span>
+            </div>
+
+            <!-- ================= PROJECT 1: GRASS ================= -->
+            <article class="project-item">
+                <div class="project-card">
+                    <div class="media-container">
+                        <video autoplay muted loop playsinline>
+                            <source src="assets/grass-system.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div class="text-container">
+                        <div class="project-headline">
+                            TONS of <br> grass
+                        </div>
+
+                        <h3 class="project-title">Grass System</h3>
+                        <span class="project-tags">Graphics-Tools-Unity</span>
+                        
+                        <p class="project-description">
+                            After switching to Unity due to staying abroad with a light notebook, I have quickly noticed I was not able to render any foliage within reasonable delay. Tried lots of options on the web yet none was giving enough performance for the looks I wanted. This grass system is based on the MinionsArt’s, with the improved rendering for top down views, vast support for custom wind gust effects and several performance improvements for low end devices. Can render 60K+ blades perfectly without a discrete gpu, around 60+ fps.                        </p>
+
+                        <a href="https://github.com/evesfect/grass-system" target="_blank" class="read-more">Read more...</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ================= PROJECT 2: TERRAIN ================= -->
+            <article class="project-item">
+                <div class="project-card">
+                    <div class="media-container">
+                        <video autoplay muted loop playsinline>
+                            <source src="assets/dynamic-terrain.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div class="text-container">
+                        <div class="project-headline">
+                            Rapid Level <br> Design
+                        </div>
+
+                        <h3 class="project-title">Dynamic Terrain System</h3>
+                        <span class="project-tags">Terrain-Tools-Unity</span>
+                        
+                        <p class="project-description">
+                            I had issues with terrain manipulation while working on a procedural hive city generator, trying to adjust terrain levels according to the building floors. Basic height alignment meant a great sacrifice in quality, and really high complexity during so. What if I could simply include ground patch meshes with the building objects, without rendering any of them in-game, just to adjust terrain real-time?
+                            <br>This one drastically speeds up the level building process, and also supports in-game terrain manipulations with only 1 render pass delay.                        </p>
+
+                        <a href="https://github.com/evesfect/DynamicTerrain" target="_blank" class="read-more">Read more...</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ================= PROJECT 3: SAIL CONCEPT ================= -->
+            <article class="project-item">
+                <div class="project-card">
+                    <div class="media-container">
+                        <video autoplay muted loop playsinline>
+                            <source src="assets/sailconcept.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div class="text-container">
+
+                        <h3 class="project-title">Sail Concept</h3>
+                        <span class="project-tags">Graphics-Physics-Unity</span>
+                        
+                        <p class="project-description">
+                            Beauty of sailboats are something else.
+                            <br><br>This project aims to create the foundations of a potential third person sailing game, providing:<br>Efficient ocean (utilizing Crest),
+                            <br>Physics interactors for vessels,<br>Procedural sail generation,<br>Sail physics module,<br>Vessel navigation module. 
+                            <br><br>This project is closed-sourced, and still in-progress.
+
+
+
+                        </p>
+
+                    </div>
+                </div>
+            </article>
+
+            <!-- ================= PROJECT 4: KARABATAK (IMAGE) ================= -->
+            <article class="project-item">
+                <div class="project-card">
+                    <div class="media-container">
+                        <img src="assets/karabatak.png" alt="Karabatak img">
+                    </div>
+
+                    <div class="text-container">
+
+                        <h3 class="project-title">Karabatak - UAV</h3>
+                        <span class="project-tags">Autonomous Unmanned Aerial Target-Chasing Vehicle</span>
+                        
+                        <p class="project-description">
+                            Fully original aircraft design & flight control software.
+                            <br>Completely autonomous capability of aerial dog-fight.
+                            <br><br>Single-handedly designed the aircraft.
+                            <br>Manufactured with a team of five, semi-composite build.
+                            <br>Teknofest finalist 2024 & 2025.
+                            <br><br>Soon to be open-sourced.                       </p>
+
+                        <a href="https://github.com/evesfect" target="_blank" class="read-more">Read more...</a>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+
+        <!-- RIGHT: SIDEBAR -->
+        <aside class="sidebar-column">
+            <div class="section-header">
+                <span>About Me</span>
+                <span id="clock" class="clock-display">00:00:00</span>
+            </div>
+
+            <div class="profile-section">
+                <div>
+                    <span class="profile-name">Ege Y</span>
+                    <a href="mailto:evesfect@gmail.com">evesfect@gmail.com</a><br>
+                    <a href="https://github.com/evesfect" target="_blank">github.com/evesfect</a>
+                </div>
+
+                <div class="role-text">
+                    Graphics/Computer Engineering/<br>Technical Art
+                </div>
+
+                <div class="bio-text">
+                    A developer specializing in engine tools, graphics, and real-time simulations. <br>
+                </div>
+                
+                <div class="bio-text">
+                    Computer Science - Mechatronics - Aviation - Art
+                </div>
+                <div class="bio-text">
+                    Graphics Enthusiast
+                </div>
+
+                <div class="sidebar-links">
+                    <a href="assets/cv.pdf" target="_blank">CV &rarr;</a>
+                    <a href="#">Non-Technical Art &rarr;</a>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                &copy;2037 RIGHTS RESERVED
+            </div>
+        </aside>
+
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('clock').textContent = now.toLocaleTimeString('en-GB', { hour12: false });
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+</body>
+</html>
